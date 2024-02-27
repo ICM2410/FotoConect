@@ -75,7 +75,7 @@
         android:id="@+id/imageView"
         android:layout_width="93dp"
         android:layout_height="88dp"
-        android:layout_marginTop="540dp"
+        android:layout_marginTop="552dp"
         android:src="@drawable/FotoConnectLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

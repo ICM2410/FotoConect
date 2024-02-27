@@ -26,21 +26,25 @@
         android:id="@+id/descripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Explora y conectate con el mundo"
+        android:text="Your Friends for Real."
         app:layout_constraintBottom_toTopOf="@+id/nombreUsuario"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.229" />
 
     <EditText
         android:id="@+id/contraseña"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/button_foreground"
         android:inputType="textPassword"
-        android:hint="Contraseña"
+        android:hint="  Contraseña"
         android:alpha="0.5"
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,12 +57,14 @@
     <EditText
         android:id="@+id/nombreUsuario"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/button_foreground"
         android:inputType="text"
-        android:hint="Usuario"
+        android:hint="  Usuario"
         android:alpha="0.5"
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,12 +77,14 @@
     <EditText
         android:id="@+id/confirmar_con"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:alpha="0.5"
         android:ems="10"
-        android:hint="Confirma tu contraseña"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/button_foreground"
+        android:hint="  Confirma tu contraseña"
         android:inputType="text"
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,23 +92,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.612" />
+        app:layout_constraintVertical_bias="0.622"
+        app:backgroundTint="@null"
 
+
+        />
     <Button
         android:id="@+id/button"
+        style="@style/BlackButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="@color/white"
         android:text="Registra tu cuenta"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirmar_con"
-        app:layout_constraintVertical_bias="0.154" />
+        app:layout_constraintVertical_bias="0.154"
+        android:theme="@style/Theme.AppCompat"
+
+        />
+
+
 
     <Button
         android:id="@+id/button2"

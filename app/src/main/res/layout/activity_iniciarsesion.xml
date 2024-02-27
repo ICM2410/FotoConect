@@ -7,33 +7,19 @@
     android:background="@color/white"
     tools:context=".IniciarSesion">
 
-    <EditText
-        android:id="@+id/contraseña"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Contraseña"
-        android:alpha="0.5"
-        android:textColorHint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombreUsuario"
-        app:layout_constraintVertical_bias="0.044" />
+
 
     <EditText
         android:id="@+id/nombreUsuario"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/button_foreground"
         android:inputType="text"
-        android:hint="Usuario"
+        android:hint="  Usuario"
         android:alpha="0.5"
         android:textColorHint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,21 +28,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.445" />
-
+    <EditText
+        android:id="@+id/contraseña"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:background="@drawable/button_background"
+        android:foreground="@drawable/button_foreground"
+        android:inputType="textPassword"
+        android:hint="  Contraseña"
+        android:alpha="0.5"
+        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombreUsuario"
+        app:layout_constraintVertical_bias="0.044" />
     <Button
         android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:text="Iniciar sesión"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contraseña"
-        app:layout_constraintVertical_bias="0.093" />
+        android:textColor="@color/white"
+    android:backgroundTint="@color/black"
+    android:layout_constraintBottom_toBottomOf="parent"
+    android:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/contraseña"
+    app:layout_constraintVertical_bias="0.093" />
 
     <Button
         android:id="@+id/button2"
@@ -91,29 +95,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.50" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="167dp"
         android:layout_height="167dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/FotoConnectLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Inicia sesión"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/nombreUsuario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
