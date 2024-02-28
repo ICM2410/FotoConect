@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.messageview)
+        setContentView(R.layout.inicialslide)
 
         window.statusBarColor = Color.TRANSPARENT
 
