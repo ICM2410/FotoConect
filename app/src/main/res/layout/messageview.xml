@@ -1,0 +1,39 @@
+<!-- Seguidor layout -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Mensaje">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/costum_toolbar" />
+
+        <include
+            android:id="@+id/seguidor"
+            layout="@layout/mensajeitem" />
+
+        <include
+            android:id="@+id/seguidor2"
+            layout="@layout/mensajeitem" />
+
+        <include
+            android:id="@+id/seguidor3"
+            layout="@layout/mensajeitem" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_navigation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
