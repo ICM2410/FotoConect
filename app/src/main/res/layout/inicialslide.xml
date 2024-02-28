@@ -10,7 +10,7 @@
         android:layout_width="167dp"
         android:layout_height="161dp"
         android:layout_centerInParent="true"
-        app:srcCompat="@drawable/fotoconnectlogo" />
+        app:srcCompat="@drawable/FotoConnectLogo" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="500dp"
-        app:srcCompat="@drawable/montelibanostudioslogo" />
+        app:srcCompat="@drawable/MontelibanoStudiosLogo" />
 
 </RelativeLayout>
