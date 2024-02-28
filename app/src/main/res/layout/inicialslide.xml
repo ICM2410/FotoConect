@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="285dp"
-        app:srcCompat="@drawable/FotoConnectLogo" />
+        app:srcCompat="@drawable/fotoconnectlogo" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="500dp"
-        app:srcCompat="@drawable/MontelibanoStudiosLogo" />
+        app:srcCompat="@drawable/montelibanostudios" />
 
 </RelativeLayout>

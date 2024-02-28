@@ -140,7 +140,7 @@
         android:layout_width="93dp"
         android:layout_height="88dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/FotoConnectLogo"
+        android:src="@drawable/fotoconnectlogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
