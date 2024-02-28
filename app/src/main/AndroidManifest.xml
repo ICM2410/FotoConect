@@ -12,15 +12,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FotoConnect"
         tools:targetApi="31">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".IniciaSesion"
+            android:exported="true">
+            <!-- Add any intent-filter or other configurations for IniciaSesion activity here -->
+        </activity>
+
+        <activity
+            android:name=".FeedActivity"
+            android:exported="true">
+            <!-- Add any intent-filter or other configurations for FeedActivity here -->
+        </activity>
+
+        <!-- Add the new RegistroActivity -->
+        <activity
+            android:name=".Registro"
+            android:exported="true">
+            <!-- Add any intent-filter or other configurations for RegistroActivity here -->
+        </activity>
+
+        <!-- Add the new RecuperarContrasenaActivity -->
+        <activity
+            android:name=".RecuperarContrasena"
+            android:exported="true">
+            <!-- Add any intent-filter or other configurations for RecuperarContrasenaActivity here -->
+        </activity>
+
     </application>
 
 </manifest>

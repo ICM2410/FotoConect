@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity"
+    tools:context=".FeedActivity"
     >
     <include layout="@layout/costum_toolbar" />
     <include layout="@layout/post_item" />
@@ -17,15 +17,15 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation"
 
-        />
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/white"
+        android:background="@drawable/roundstyle"
+
         app:itemIconTint="#020101"
         app:itemTextColor="#020101"
         app:menu="@menu/nav_menu"
