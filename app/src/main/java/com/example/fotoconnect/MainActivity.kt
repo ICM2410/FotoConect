@@ -18,6 +18,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, IniciaSesion::class.java)
             startActivity(intent)
             finish()  // Optional: Close the current activity if needed
-        }, 300)  // 4 seconds delay
+        }, 3000)  // 4 seconds delay
     }
 }
