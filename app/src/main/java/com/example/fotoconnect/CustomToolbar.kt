@@ -13,9 +13,6 @@ class CustomToolbar @JvmOverloads constructor(
     init {
         // Inflate the layout
         LayoutInflater.from(context).inflate(R.layout.costum_toolbar, this, true)
-
-
-
         // You can set up click listeners for other buttons similarly
     }
 }
