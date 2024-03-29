@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".TakepicActivity">
+
+    <LinearLayout
+        android:id="@+id/userNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_alignParentTop="true">
+
+
+        <ImageView
+            android:id="@+id/userIcon"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:src="@drawable/returnsign"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="8dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/registrarsetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time to Connect"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/userNameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Friends for Real."
+        android:paddingTop="10dp"
+        android:alpha="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registrarsetext"
+        />
+    <ImageView
+        android:id="@+id/Imagenaver"
+        android:layout_width="250dp"
+        android:layout_height="350dp"
+        android:background="@drawable/roundstyle"
+        android:clipToOutline="true"
+    />
+
+    <Button
+        android:id="@+id/capture_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Be Real!"
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>

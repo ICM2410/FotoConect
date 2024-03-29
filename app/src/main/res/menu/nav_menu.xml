@@ -8,9 +8,8 @@
         android:title=""
         />
     <item
-
         android:id="@+id/ic_camara"
-        android:icon="@drawable/logocamara"
+        android:icon="@drawable/homepagevector"
         android:title=""
         />
     <item

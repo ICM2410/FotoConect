@@ -8,32 +8,51 @@
     tools:context=".IniciaSesion">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="167dp"
+        android:layout_height="167dp"
+        android:contentDescription="Logo foto connect"
+        android:src="@drawable/fotoconnectlogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="169dp"
 
+        />
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Friends for Real."
+        android:alpha="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        />
     <EditText
-        android:id="@+id/nombreUsuario"
+        android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:paddingStart="15dp"
+        android:layout_marginTop="38dp"
     android:paddingEnd="8dp"
     android:background="@drawable/button_background"
     android:foreground="@drawable/button_foreground"
+
     android:inputType="text"
     android:hint="Usuario"
-    android:alpha="0.5"
-    android:textColorHint="@color/black"
     android:gravity="center_vertical"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.497"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.445" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
 
     <EditText
-        android:id="@+id/contraseña"
+        android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
@@ -43,8 +62,6 @@
         android:foreground="@drawable/button_foreground"
         android:inputType="textPassword"
         android:hint="Contraseña"
-        android:alpha="0.5"
-        android:textColorHint="@color/black"
         android:paddingStart="15dp"
     android:paddingEnd="8dp"
     android:gravity="center_vertical"
@@ -52,22 +69,22 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.497"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/nombreUsuario"
+    app:layout_constraintTop_toBottomOf="@+id/edt_email"
     app:layout_constraintVertical_bias="0.044" />
 
     <Button
-        android:id="@+id/iniciases"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:text="Iniciar sesión"
         android:textColor="@color/white"
     android:backgroundTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/contraseña"
+    app:layout_constraintTop_toBottomOf="@+id/edt_password"
      />
 
     <Button
@@ -76,45 +93,35 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:alpha="0.5"
         android:backgroundTint="@android:color/white"
-        android:outlineSpotShadowColor="@color/black"
-        android:shadowColor="#000000"
         android:text="Olvidé mi contraseña"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iniciases"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+ />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_SignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@android:color/white"
         android:textColor="@color/black"
         android:outlineSpotShadowColor="@color/black"
-        android:text="No tienes una cuenta? Registrate!"
+        android:text="¿No tienes una cuenta? Registrate!"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.50" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="167dp"
-        android:layout_height="167dp"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/fotoconnectlogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Logo foto connect" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,23 +7,34 @@
     android:background="@color/white"
     tools:context=".FeedActivity">
 
-    <include layout="@layout/costum_toolbar" />
-
-    <FrameLayout
-        android:id="@+id/fl_wrapper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/costum_toolbar"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_marginBottom="0dp" />
+    <include
+        android:id="@+id/costum_toolbar"
+        layout="@layout/costum_toolbar" />
 
     <include
+        android:id="@+id/post_item"
+        layout="@layout/post_item"
+        android:layout_width="wrap_content"
+        android:layout_height="440dp"
+        android:layout_below="@+id/costum_toolbar"
+
+        android:layout_marginTop="0dp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        layout="@layout/bottom_navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_gravity="bottom"
+        android:background="@drawable/roundstyle3"
+        app:itemIconTint="#020101"
+        app:itemTextColor="#020101"
+        app:menu="@menu/nav_menu"
+        android:layout_below="@+id/post_item"
+        app:labelVisibilityMode="unlabeled" />
 
-    <include layout="@layout/post_item" />
+
+    />
+
+
 
 </RelativeLayout>

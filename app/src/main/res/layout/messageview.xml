@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Mensaje">
+    tools:context=".MensajeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,17 +15,19 @@
             android:id="@+id/toolbar"
             layout="@layout/costum_toolbar" />
 
-        <include
-            android:id="@+id/seguidor"
-            layout="@layout/mensajeitem" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
 
-        <include
-            android:id="@+id/seguidor2"
-            layout="@layout/mensajeitem" />
-
-        <include
-            android:id="@+id/seguidor3"
-            layout="@layout/mensajeitem" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout_editor_absoluteX="1dp"
+                tools:layout_editor_absoluteY="1dp"
+                tools:listitem="@layout/mensajeitem"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

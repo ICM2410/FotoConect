@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="65dp"
     android:layout_gravity="bottom"
-    android:background="@drawable/roundstyle"
+    android:background="@drawable/roundstyle3"
     app:itemIconTint="#020101"
     app:itemTextColor="#020101"
     app:menu="@menu/nav_menu"
