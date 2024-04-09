@@ -65,18 +65,21 @@ class MensajeActivity  : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val peopleButton = findViewById<View>(R.id.people)
         val notificationButton = findViewById<View>(R.id.notificationl)
 
-        peopleButton.setOnClickListener {
-            // Start PeopleActivity here
-            val intent = Intent(this, MyUserActivity::class.java)
-            startActivity(intent)
-        }
 
         notificationButton.setOnClickListener {
             // Start NotificationActivity here
             val intent = Intent(this, TakepicActivity::class.java)
+            startActivity(intent)
+        }
+
+        val peopleButton = findViewById<View>(R.id.people)
+
+
+        peopleButton.setOnClickListener {
+            // Start NotificationActivity here
+            val intent = Intent(this, MyUserActivity::class.java)
             startActivity(intent)
         }
     }

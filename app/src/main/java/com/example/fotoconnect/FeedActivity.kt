@@ -2,6 +2,7 @@ package com.example.fotoconnect
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fotoconnect.databinding.ActivityFeedBinding
 
@@ -14,29 +15,29 @@ class FeedActivity : AppCompatActivity() {
 
         binding = ActivityFeedBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // Accessing notificationl from custom_toolbar layout
-        binding.costumToolbar.notificationl.setOnClickListener {
-            // Launch your activity when the notification icon is clicked
-            startActivity(Intent(this, TakepicActivity::class.java))
+
+        //Para iniciar buttom navigation
+        val navigationButton = findViewById<View>(R.id.ic_mensaje)
+        navigationButton.setOnClickListener {
+            // Start FeedActivity here
+            val intent = Intent(this, MensajeActivity::class.java)
+            startActivity(intent)
         }
-        // Accessing notificationl from custom_toolbar layout
-        binding.costumToolbar.people.setOnClickListener {
-            // Launch your activity when the notification icon is clicked
-            startActivity(Intent(this, MyUserActivity::class.java))
+
+        val notificationButton = findViewById<View>(R.id.notificationl)
+
+
+        notificationButton.setOnClickListener {
+            // Start NotificationActivity here
+            val intent = Intent(this, TakepicActivity::class.java)
+            startActivity(intent)
         }
-        binding.bottomNavigation.selectedItemId = R.id.ic_camara
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.ic_mensaje -> {
-                    startActivity(Intent(this, MensajeActivity::class.java))
-                    true
-                }
-               /*R.id.ic_camara -> {
-                    startActivity(Intent(this, TakepicActivity::class.java))
-                    true
-                }*/
-                else -> false
-            }
+        val peopleButton = findViewById<View>(R.id.people)
+
+        peopleButton.setOnClickListener {
+            // Start NotificationActivity here
+            val intent = Intent(this, MyUserActivity::class.java)
+            startActivity(intent)
         }
     }
 }

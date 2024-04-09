@@ -15,24 +15,16 @@
         android:id="@+id/post_item"
         layout="@layout/post_item"
         android:layout_width="wrap_content"
-        android:layout_height="440dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/costum_toolbar"
-
         android:layout_marginTop="0dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <include
         android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/roundstyle3"
-        app:itemIconTint="#020101"
-        app:itemTextColor="#020101"
-        app:menu="@menu/nav_menu"
-        android:layout_below="@+id/post_item"
-        app:labelVisibilityMode="unlabeled" />
-
-
+        android:layout_alignParentBottom="true" />
     />
 
 
