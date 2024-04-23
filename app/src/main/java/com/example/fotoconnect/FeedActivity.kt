@@ -50,6 +50,14 @@ class FeedActivity : AppCompatActivity() {
                 Log.e(TAG, "Error while reading posts", databaseError.toException())
             }
         })
+        
+
+        //Boton mapa
+        val mapButton = findViewById<View>(R.id.ic_mapa)
+        mapButton.setOnClickListener {
+            startActivity(Intent(this,MapsActivity::class.java))
+        }
+
 
         // Setup navigation buttons as before
         val navigationButton = findViewById<View>(R.id.ic_mensaje)
