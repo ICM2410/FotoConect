@@ -1,4 +1,4 @@
-package com.example.fotoconnect
+package com.example.fotoconnect.model
 
 import android.provider.ContactsContract.CommonDataKinds.Email
 
