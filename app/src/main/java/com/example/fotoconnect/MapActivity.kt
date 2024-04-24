@@ -251,12 +251,12 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         return object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent) {
                 if (event.sensor.type == Sensor.TYPE_LIGHT) {
-                    // Check light value and switch map style
+                    
                     val lux = event.values[0]
                     if (lux < 5000) {
                         // Assume dark style
                         runOnUiThread {
-                            // Assuming you have a dark style ready
+                            
                             mMap.overlayManager.tilesOverlay.setColorFilter(
                                 ColorMatrixColorFilter(floatArrayOf(
                                     -1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
@@ -276,7 +276,7 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
 
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                // Do something here if sensor accuracy changes.
+                
             }
         }
     }
