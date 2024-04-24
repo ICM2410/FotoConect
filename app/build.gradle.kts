@@ -70,4 +70,8 @@ dependencies {
     // Add the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.github.MKergall:osmbonuspack:6.6.0")
+    implementation("com.google.maps:google-maps-services:0.16.1")
 }
