@@ -18,7 +18,7 @@ class FeedActivity : AppCompatActivity() {
 
         val mapButton = findViewById<View>(R.id.ic_mapa)
         mapButton.setOnClickListener {
-            startActivity(Intent(this,MapsActivity::class.java))
+            startActivity(Intent(this, MapActivity::class.java))
         }
         //Para iniciar buttom navigation
         val navigationButton = findViewById<View>(R.id.ic_mensaje)
@@ -29,15 +29,12 @@ class FeedActivity : AppCompatActivity() {
         }
 
         val notificationButton = findViewById<View>(R.id.notificationl)
-
-
         notificationButton.setOnClickListener {
             // Start NotificationActivity here
             val intent = Intent(this, TakepicActivity::class.java)
             startActivity(intent)
         }
         val peopleButton = findViewById<View>(R.id.people)
-
         peopleButton.setOnClickListener {
             // Start NotificationActivity here
             val intent = Intent(this, MyUserActivity::class.java)

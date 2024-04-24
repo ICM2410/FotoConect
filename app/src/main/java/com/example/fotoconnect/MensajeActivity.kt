@@ -64,10 +64,11 @@ class MensajeActivity  : AppCompatActivity() {
             val intent = Intent(this, FeedActivity::class.java)
             startActivity(intent)
         }
-
+        val mapButton = findViewById<View>(R.id.ic_mapa)
+        mapButton.setOnClickListener {
+            startActivity(Intent(this, MapActivity::class.java))
+        }
         val notificationButton = findViewById<View>(R.id.notificationl)
-
-
         notificationButton.setOnClickListener {
             // Start NotificationActivity here
             val intent = Intent(this, TakepicActivity::class.java)
