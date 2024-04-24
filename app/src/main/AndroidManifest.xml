@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature android:name="android.hardware.sensor.light" android:required="true" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -9,7 +12,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,6 +27,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FotoConnect"
         tools:targetApi="31">
+
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
+
+             To get one, follow the directions here:
+
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
+
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -29,69 +57,64 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".IniciaSesion"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for IniciaSesion activity here -->
         </activity>
         <activity
             android:name=".MyUserActivity"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for IniciaSesion activity here -->
         </activity>
         <activity
             android:name=".TakepicActivity"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for IniciaSesion activity here -->
         </activity>
         <activity
             android:name=".FeedActivity"
             android:exported="true">
-            <!-- Add any intent-filter or other configurations for FeedActivity here -->
-        </activity>
 
-        <!-- Add the new RegistroActivity -->
+            <!-- Add any intent-filter or other configurations for FeedActivity here -->
+        </activity> <!-- Add the new RegistroActivity -->
         <activity
             android:name=".Registro"
             android:exported="true">
-            <!-- Add any intent-filter or other configurations for RegistroActivity here -->
-        </activity>
 
-        <!-- Add the new RecuperarContrasenaActivity -->
+            <!-- Add any intent-filter or other configurations for RegistroActivity here -->
+        </activity> <!-- Add the new RecuperarContrasenaActivity -->
         <activity
             android:name=".RecuperarContrasena"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for RecuperarContrasenaActivity here -->
         </activity>
-
         <activity
             android:name=".MensajeActivity"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for RegistroActivity here -->
         </activity>
         <activity
             android:name=".ChatActivity"
             android:exported="true">
+
             <!-- Add any intent-filter or other configurations for RegistroActivity here -->
         </activity>
     </application>
 
 </manifest>
-

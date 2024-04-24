@@ -2,9 +2,11 @@ package com.example.fotoconnect
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.example.fotoconnect.databinding.ActivityMapsBinding
 import com.google.android.gms.maps.model.Marker
+import org.osmdroid.bonuspack.routing.RoadManager
+import org.osmdroid.bonuspack.routing.RoadManager.*
+import org.osmdroid.bonuspack.routing.OSRMRoadManager
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Polyline
+import org.osmdroid.views.overlay.Polyline.*
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.PolylineOptions
+import org.osmdroid.config.Configuration
+import org.osmdroid.views.MapView
+import com.google.maps.GeoApiContext
+import com.google.maps.DirectionsApi
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -100,9 +114,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 lastLocation = location
             }
         }
-        listaMarcadores.add(mMap.addMarker(MarkerOptions().position(LatLng(4.632612, -74.066029)).title("Diego")))
-        listaMarcadores.add(mMap.addMarker(MarkerOptions().position(LatLng(4.632954, -74.076801)).title("Andres")))
-        listaMarcadores.add(mMap.addMarker(MarkerOptions().position(LatLng(4.651871, -74.088453)).title("Pepe")))
+        listaMarcadores.add(
+            mMap.addMarker(
+                MarkerOptions().position(LatLng(4.632612, -74.066029)).title("Diego")
+            )
+        )
+        listaMarcadores.add(
+            mMap.addMarker(
+                MarkerOptions().position(LatLng(4.632954, -74.076801)).title("Andres")
+            )
+        )
+        listaMarcadores.add(
+            mMap.addMarker(
+                MarkerOptions().position(LatLng(4.651871, -74.088453)).title("Pepe")
+            )
+        )
     }
 
     fun buscarAmigo(titulo: String) {
@@ -112,7 +138,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.position))
                 }
             }
+            else{
+                Toast.makeText(this, "No se encontró este usuario", Toast.LENGTH_SHORT).show()
+            }
         }
-        Toast.makeText(this, "No se encontró este usuario", Toast.LENGTH_SHORT).show()
     }
+
 }
+
+    
+
+
+
+    

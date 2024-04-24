@@ -3,4 +3,5 @@
     <string name="logocamara">logoCamara</string>
     <string name="logoenvmens">logoenvmens</string>
     <string name="logomaoa">logomaoa</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
