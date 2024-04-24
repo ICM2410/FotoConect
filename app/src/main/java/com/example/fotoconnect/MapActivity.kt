@@ -205,13 +205,14 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
 
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                // Can handle sensor accuracy changes here if needed
+                
             }
         }
     }
 
+    
     private fun searchAddressAndDrawRoute(addressOrTitle: String) {
-        // Check if it's a known marker title and center the map on it
+        
         markersMap[addressOrTitle]?.let { marker ->
             mMap.controller.setCenter(marker.position)
             mMap.controller.setZoom(18.5)
@@ -221,7 +222,7 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             return
         }
 
-        // If no marker found, proceed to geocode the address
+        
         val geocoder = Geocoder(this)
         try {
             val addresses = geocoder.getFromLocationName(addressOrTitle, 1)
