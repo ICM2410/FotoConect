@@ -4,9 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -30,7 +33,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.fotoconnect.databinding.ActivityMapBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import org.json.JSONArray
 import org.json.JSONObject
 import org.osmdroid.api.IMapController
@@ -52,6 +62,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.util.Date
 import java.util.Locale
+import kotlin.math.cos
 
 
 class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
@@ -69,8 +80,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
     private var temperatureSensor: Sensor? = null
     private var humiditySensor: Sensor? = null
     private lateinit var humidityEventListener: SensorEventListener
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMapBinding.inflate(layoutInflater)
@@ -80,7 +89,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         } else {
             TODO("VERSION.SDK_INT < GINGERBREAD")
         }
-
         val navigationButton1 = findViewById<View>(R.id.ic_camara)
         navigationButton1.setOnClickListener {
         // Start FeedActivity here
@@ -112,9 +120,8 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         if (lightSensor == null) {
             Toast.makeText(this, "No light sensor found!", Toast.LENGTH_SHORT).show()
         }
-
         lightEventListener = createLightSensorListener()
-        val roadManager = OSRMRoadManager(this)
+        val roadManager = OSRMRoadManager(this,"Android")
         Configuration.getInstance().load(
             applicationContext,
             getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
@@ -151,6 +158,8 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         } else {
             initializeMap()
             initializeMarkers()
+            fetchAndPlaceUserLocations()  // Add this line to fetch and place user locations
+
         }
         addressField = findViewById(R.id.address_field)
         val locateButton = findViewById<Button>(R.id.button3)
@@ -161,7 +170,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 mMap.controller.setZoom(18.5)  // You can adjust the zoom level as needed
             } ?: Toast.makeText(this, "Current location not available", Toast.LENGTH_SHORT).show()
         }
-
         val routeButton = findViewById<Button>(R.id.button2)
         routeButton.setOnClickListener {
             val addressString = addressField.text.toString()
@@ -170,6 +178,27 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
         }
         setupAddressInput()
+    }
+    private fun fetchAndPlaceUserLocations() {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users")
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (userSnapshot in snapshot.children) {
+                    val latitude = userSnapshot.child("latitude").getValue(Double::class.java)
+                    val longitude = userSnapshot.child("longitude").getValue(Double::class.java)
+                    val name = userSnapshot.child("name").getValue(String::class.java)
+                    val profilePictureUrl = userSnapshot.child("contactImage").getValue(String::class.java)
+                    if (latitude != null && longitude != null && name != null && profilePictureUrl != null) {
+                        val geoPoint = GeoPoint(latitude, longitude)
+                        addMarkerAtLocation(geoPoint, name, profilePictureUrl)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MapActivity, "Failed to load user locations: ${error.message}", Toast.LENGTH_SHORT).show()
+                Log.e("MapActivity", "Database error: ${error.message}")
+            }
+        })
     }
 
     private val temperatureListener = object : SensorEventListener {
@@ -180,17 +209,36 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 temperatureTextView.text = "$temperature°C"
             }
         }
-
         override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
             // Handle sensor accuracy changes if necessary
         }
     }
-    private fun initializeMyLocationOverlay() {
+    private fun initializeMyLocationOverlay(profilePictureUrl: String?) {
         val gpsMyLocationProvider = GpsMyLocationProvider(this)
-        mMyLocationOverlay = MyLocationNewOverlay(gpsMyLocationProvider, mMap)
-        mMyLocationOverlay.enableMyLocation()  // Enable the location updates
-        mMyLocationOverlay.enableFollowLocation()  // Ensure the map follows the location
-        mMyLocationOverlay.isDrawAccuracyEnabled = true
+        mMyLocationOverlay = MyLocationNewOverlay(gpsMyLocationProvider, mMap).apply {
+            enableMyLocation()
+            enableFollowLocation()
+            isDrawAccuracyEnabled = true
+        }
+
+        if (profilePictureUrl != null) {
+            Glide.with(this)
+                .asBitmap()
+                .load(profilePictureUrl)
+                .circleCrop()
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        val resizedBitmap = Bitmap.createScaledBitmap(resource, 100, 100, false)
+                        mMyLocationOverlay.setPersonIcon(BitmapDrawable(resources, resizedBitmap).bitmap)
+                        mMap.invalidate()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Handle cleanup if needed
+                    }
+                })
+        }
+
         mMap.overlays.add(mMyLocationOverlay)
     }
 
@@ -203,14 +251,16 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                     humidityTextView.text = "$humidity%"
                 }
             }
-
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
                 
             }
         }
     }
+<<<<<<< Updated upstream
 
     
+=======
+>>>>>>> Stashed changes
     private fun searchAddressAndDrawRoute(addressOrTitle: String) {
         
         markersMap[addressOrTitle]?.let { marker ->
@@ -221,8 +271,12 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
             return
         }
+<<<<<<< Updated upstream
 
         
+=======
+        // If no marker found, proceed to geocode the address
+>>>>>>> Stashed changes
         val geocoder = Geocoder(this)
         try {
             val addresses = geocoder.getFromLocationName(addressOrTitle, 1)
@@ -245,8 +299,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             Toast.makeText(this, "Error while searching: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-
-
     private fun createLightSensorListener(): SensorEventListener {
         return object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent) {
@@ -274,13 +326,11 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                     }
                 }
             }
-
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
                 
             }
         }
     }
-
     override fun onResume() {
         super.onResume()
         mMap.onResume()
@@ -298,10 +348,7 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             sensorManager.registerListener(temperatureListener, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
         sensorManager.unregisterListener(humidityEventListener)
-
     }
-
-
     private fun setupAddressInput() {
         addressField = findViewById(R.id.address_field)
         addressField.imeOptions = EditorInfo.IME_ACTION_SEND
@@ -319,28 +366,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
 
     }
     private fun initializeMarkers() {
-        // Define marker locations with titles
-        val markersList = listOf(
-            Triple(4.594204, -74.072463, "Simón"),  // Plaza de Bolívar
-            Triple(4.601543, -74.071397, "Frida"),  // Museo del Oro
-            Triple(4.605365, -74.055875, "Gabriel"),  // Cerro de Monserrate
-            Triple(4.618301, -74.071244, "Isabella"),  // Museo Nacional de Colombia
-            Triple(4.718674, -74.035767, "Carlos"),  // Usaquén
-            Triple(4.673581, -74.050355, "Catalina"),  // Parque de la 93
-            Triple(4.681730, -74.086789, "Camilo"),  // Jardín Botánico de Bogotá
-            Triple(4.593903, -74.072713, "Antonia"),  // Barrio La Candelaria
-            Triple(4.668288, -74.055836, "Rafael"),  // Zona T
-            Triple(4.595676, -74.072564, "Lucía"),  // Centro Cultural Gabriel García Márquez
-            Triple(4.632612, -74.066029, "Diego"),
-            Triple(4.632954, -74.076801, "Andres"),
-            Triple(4.651871, -74.088453, "Pepe")
-        )
-
-        // Loop through each and add them to the map and hashmap
-        markersList.forEach { (lat, lon, title) ->
-            val geoPoint = GeoPoint(lat, lon)
-            addMarkerAtLocation(geoPoint, title)
-        }
     }
     class MyLocation(val date: Date, val latitude: Double, val longitude: Double) {
         @RequiresApi(Build.VERSION_CODES.N)
@@ -380,14 +405,12 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             Toast.makeText(this, "Error while searching: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
-
-
     private val RADIUS_OF_EARTH_KM = 6371.0
     fun distance(lat1: Double, long1: Double, lat2: Double, long2: Double): Double {
         val latDistance = Math.toRadians(lat1 - lat2)
         val lngDistance = Math.toRadians(long1 - long2)
         val a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                Math.cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
                 Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2)
         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
         val result = RADIUS_OF_EARTH_KM * c
@@ -395,16 +418,14 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
     }
     private var roadOverlay: Polyline? = null
     private fun drawRoute(start: GeoPoint, finish: GeoPoint) {
-        val roadManager = OSRMRoadManager(this)
+        val roadManager = OSRMRoadManager(this,"Android")
         val routePoints = ArrayList<GeoPoint>()
         routePoints.add(start)
         routePoints.add(finish)
         val road = roadManager.getRoad(routePoints)
-
         // Calculate distance and display it
         val dist = distance(start.latitude, start.longitude, finish.latitude, finish.longitude)
         Toast.makeText(this, "Distancia: $dist km", Toast.LENGTH_LONG).show()
-
         roadOverlay?.let {
             mMap.overlays.remove(it)
         }
@@ -420,14 +441,12 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         // Configure the map controller and overlays
         controller = mMap.controller
         controller.setZoom(17.5)
-
         // Setup the location overlay
         val locationProvider = GpsMyLocationProvider(this)
         mMyLocationOverlay = MyLocationNewOverlay(locationProvider, mMap)
         mMyLocationOverlay.enableMyLocation() // Enable location updates
         mMyLocationOverlay.enableFollowLocation() // Map follows the location
         mMyLocationOverlay.isDrawAccuracyEnabled = true
-
         // Handle initial location fix to center the map on the current location
         mMyLocationOverlay.runOnFirstFix {
             runOnUiThread {
@@ -436,12 +455,10 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 }
             }
         }
-
         // Add the overlay to the map
         mMap.overlays.add(mMyLocationOverlay)
         mMap.invalidate() // Refresh the map
     }
-
     override fun onPause() {
         super.onPause()
         mMap.onPause() // Pause the map view
@@ -450,26 +467,22 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             mMyLocationOverlay.disableFollowLocation()
         }
     }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             initializeMap()
+            fetchAndPlaceUserLocations()  // Add this line to fetch and place user locations
         }
     }
-
     override fun onScroll(event: ScrollEvent?): Boolean {
         return true
     }
-
     override fun onZoom(event: ZoomEvent?): Boolean {
         return false
     }
-
     override fun onGpsStatusChanged(event: Int) {
     }
-
-    private fun addMarkerAtLocation(location: GeoPoint, title: String? = null) {
+    private fun addMarkerAtLocation(location: GeoPoint, title: String? = null, imageUrl: String? = null) {
         if (title != null && markersMap.containsKey(title)) {
             mMap.overlays.remove(markersMap[title])
         }
@@ -478,14 +491,29 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             this.title = title ?: "Unnamed location"
         }
+        if (imageUrl != null) {
+            Glide.with(this)
+                .asBitmap()
+                .load(imageUrl)
+                .circleCrop()
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        val resizedBitmap = Bitmap.createScaledBitmap(resource, 100, 100, false)
+                        marker.icon = BitmapDrawable(resources, resizedBitmap)
+                        mMap.invalidate()
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                        // Handle cleanup if needed
+                    }
+                })
+        }
         mMap.overlays.add(marker)
         mMap.invalidate()
         if (title != null) {
             markersMap[title] = marker
         }
     }
-
-
     fun writeJSONObject(location: Location) {
         val myLocation = MyLocation(Date(), location.latitude, location.longitude)
         val filename = "locations.json"
@@ -506,7 +534,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         file.writeText(locations.toString())
         Log.i("LOCATION", "File modified at path: $file")
     }
-
     private fun recordLocation(newLocation: Location) {
         val distanceThreshold = 30
         if (lastRecordedLocation != null && newLocation.distanceTo(lastRecordedLocation!!) > distanceThreshold) {
@@ -517,8 +544,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             lastRecordedLocation = newLocation
         }
     }
-
-
     private fun writeLocationToFile(location: Location) {
         val dateFormat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())

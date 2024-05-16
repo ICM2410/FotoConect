@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChatActivity">
-
     <LinearLayout
         android:id="@+id/userNameLayout"
         android:layout_width="match_parent"
@@ -15,8 +14,6 @@
         android:padding="10dp"
         android:background="@color/white"
         android:layout_alignParentTop="true">
-
-
         <ImageView
             android:id="@+id/userIcon"
             android:layout_width="23dp"
@@ -25,8 +22,6 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="8dp"
             />
-
-
         <TextView
             android:id="@+id/userNameTextView"
             android:layout_width="wrap_content"
@@ -47,17 +42,13 @@
             android:id="@+id/imagenView"
             android:src="@drawable/fotoprueba3"
             app:civ_border_width="1dp" />
-
-
     </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_below="@id/userNameLayout"
         android:layout_above="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_alignParentBottom="true"
@@ -67,7 +58,6 @@
         android:weightSum="100"
         android:layout_marginBottom="5dp"
         >
-
         <EditText
             android:id="@+id/messageBox"
             android:layout_width="wrap_content"
@@ -79,7 +69,6 @@
             android:background="@drawable/button_background"
             android:foreground="@drawable/button_foreground"
             />
-
         <ImageView
             android:id="@+id/sentButton"
             android:layout_width="30dp"

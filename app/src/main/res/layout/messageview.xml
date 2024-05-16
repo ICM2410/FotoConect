@@ -10,11 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <include
             android:id="@+id/toolbar"
             layout="@layout/costum_toolbar" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,9 +26,7 @@
                 tools:layout_editor_absoluteY="1dp"
                 tools:listitem="@layout/mensajeitem"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
-
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_navigation_layout"

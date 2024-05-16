@@ -4,9 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +19,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class MensajeActivity  : AppCompatActivity() {
+class MensajeActivity : AppCompatActivity() {
+
     private lateinit var userRecyclerView: RecyclerView
     private lateinit var userList: ArrayList<User>
     private lateinit var adapter: UserAdapter
@@ -29,24 +32,21 @@ class MensajeActivity  : AppCompatActivity() {
         setContentView(R.layout.messageview)
 
         mAuth = FirebaseAuth.getInstance()
-        mDbref = FirebaseDatabase.getInstance().getReference()
+        mDbref = FirebaseDatabase.getInstance().getReference("users") // Ensure this matches your database structure
+
         userList = ArrayList()
         adapter = UserAdapter(this, userList)
 
         userRecyclerView = findViewById(R.id.userRecyclerView)
-
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
 
-        mDbref.child("user").addValueEventListener(object : ValueEventListener {
+        mDbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                //Borramos la lista para evitar repetidos
+                // Clear the list to avoid duplicates
                 userList.clear()
                 for (postSnapshot in snapshot.children) {
-
-
                     val currentUser = postSnapshot.getValue(User::class.java)
-
                     if (mAuth.currentUser?.uid != currentUser?.uid) {
                         userList.add(currentUser!!)
                     }
@@ -55,33 +55,22 @@ class MensajeActivity  : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MensajeActivity, "Failed to load users.", Toast.LENGTH_SHORT).show()
+                Log.e("MensajeActivity", "Database error: ${error.message}")
             }
-
         })
-        val navigationButton = findViewById<View>(R.id.ic_camara)
-        navigationButton.setOnClickListener {
-            // Start FeedActivity here
-            val intent = Intent(this, FeedActivity::class.java)
-            startActivity(intent)
+
+        findViewById<View>(R.id.ic_camara).setOnClickListener {
+            startActivity(Intent(this, FeedActivity::class.java))
         }
-        val mapButton = findViewById<View>(R.id.ic_mapa)
-        mapButton.setOnClickListener {
+        findViewById<View>(R.id.ic_mapa).setOnClickListener {
             startActivity(Intent(this, MapActivity::class.java))
         }
-        val notificationButton = findViewById<View>(R.id.notificationl)
-        notificationButton.setOnClickListener {
-            // Start NotificationActivity here
-            val intent = Intent(this, TakepicActivity::class.java)
-            startActivity(intent)
+        findViewById<View>(R.id.notificationl).setOnClickListener {
+            startActivity(Intent(this, TakepicActivity::class.java))
         }
-
-        val peopleButton = findViewById<View>(R.id.people)
-
-
-        peopleButton.setOnClickListener {
-            // Start NotificationActivity here
-            val intent = Intent(this, MyUserActivity::class.java)
-            startActivity(intent)
+        findViewById<View>(R.id.people).setOnClickListener {
+            startActivity(Intent(this, MyUserActivity::class.java))
         }
     }
 
@@ -92,16 +81,12 @@ class MensajeActivity  : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.logout) {
-            //logica del log out
             mAuth.signOut()
             val intent = Intent(this@MensajeActivity, IniciaSesion::class.java)
             finish()
             startActivity(intent)
             return true
         }
-        return true
-
+        return super.onOptionsItemSelected(item)
     }
-
-
 }

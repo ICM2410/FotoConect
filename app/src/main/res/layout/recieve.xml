@@ -7,7 +7,7 @@
         android:background="@drawable/recieveshape"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Este es recibir mensaje  "
-            android:paddingVertical="7dp"
+            android:paddingVertical="9dp"
             android:paddingHorizontal="10dp"
             android:textSize="15sp"/>
 

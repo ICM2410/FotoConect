@@ -7,7 +7,7 @@
       android:background="@drawable/sendshape"
       android:layout_alignParentRight="true"
 android:layout_marginRight="10dp"
-      android:layout_marginTop="5dp"
+      android:layout_marginTop="12dp"
       android:layout_height="wrap_content">
 
       <TextView
@@ -16,7 +16,7 @@ android:layout_marginRight="10dp"
           android:layout_height="wrap_content"
           android:text="Este es enviar mensaje  "
           android:textColor="@color/white"
-          android:paddingVertical="7dp"
+          android:paddingVertical="9dp"
           android:paddingHorizontal="10dp"
           android:textSize="15sp"/>
 
