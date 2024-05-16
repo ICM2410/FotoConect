@@ -16,7 +16,6 @@ class MyUserActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
-
     override fun onBackPressed() {
         super.onBackPressed()
     }

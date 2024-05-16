@@ -256,11 +256,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
         }
     }
-<<<<<<< Updated upstream
-
-    
-=======
->>>>>>> Stashed changes
     private fun searchAddressAndDrawRoute(addressOrTitle: String) {
         
         markersMap[addressOrTitle]?.let { marker ->
@@ -271,12 +266,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
             return
         }
-<<<<<<< Updated upstream
-
-        
-=======
-        // If no marker found, proceed to geocode the address
->>>>>>> Stashed changes
         val geocoder = Geocoder(this)
         try {
             val addresses = geocoder.getFromLocationName(addressOrTitle, 1)
