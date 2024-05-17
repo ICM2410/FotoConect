@@ -17,8 +17,6 @@
         android:padding="10dp"
         android:background="@color/white"
         android:layout_alignParentTop="true">
-
-
         <ImageView
             android:id="@+id/userIcon"
             android:layout_width="23dp"
@@ -27,7 +25,6 @@
             android:layout_marginStart="1dp"
             android:layout_marginEnd="8dp"
             />
-
     </LinearLayout>
 
     <TextView
@@ -54,13 +51,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registrarsetext"
         />
+
     <ImageView
-        android:id="@+id/Imagenaver"
-        android:layout_width="250dp"
-        android:layout_height="350dp"
+        android:id="@+id/imagePreview1"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
         android:background="@drawable/roundstyle"
         android:clipToOutline="true"
-    />
+        android:layout_marginTop="10dp"/>
+
+    <ImageView
+        android:id="@+id/imagePreview2"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:background="@drawable/roundstyle"
+        android:clipToOutline="true"
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/capture_btn"
@@ -68,6 +74,14 @@
         android:layout_height="wrap_content"
         android:text="Be Real!"
         android:backgroundTint="@color/black"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/publish_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Publicar"
+        android:backgroundTint="@color/black"
         android:layout_marginTop="10dp"
         />
+
 </LinearLayout>

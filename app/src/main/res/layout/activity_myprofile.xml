@@ -68,6 +68,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         />
+    <TextView
+        android:id="@+id/userEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@example.com"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_below="@+id/Nombusuario"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        />
     <LinearLayout
         android:id="@+id/stats"
         android:layout_width="match_parent"
@@ -122,7 +134,7 @@
             android:id="@+id/statsreal1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12"
+            android:text="3"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@android:color/black"
@@ -136,7 +148,7 @@
             android:id="@+id/statsreal3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="44"
+            android:text="2"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@android:color/black"
@@ -192,17 +204,10 @@
             android:gravity="center"
             />
     </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:background="@drawable/roundstyle4"
         android:layout_below="@+id/Seccionmemorias"
         ></RelativeLayout>
-    <include
-        android:id="@+id/bottom_navigation"
-        layout="@layout/bottom_navigation_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
 </RelativeLayout>

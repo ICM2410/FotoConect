@@ -10,7 +10,6 @@ class User {
     var latitude: Double? = null
     var longitude: Double? = null
     var contactImage: String? = null
-
     constructor(){}
     constructor(name: String?, email: String?, uid: String?,latitude: Double?, longitude: Double?, contactImage: String?){
         this.name = name

@@ -91,25 +91,21 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         }
         val navigationButton1 = findViewById<View>(R.id.ic_camara)
         navigationButton1.setOnClickListener {
-        // Start FeedActivity here
             val intent = Intent(this, FeedActivity::class.java)
             startActivity(intent)
         }
         val notificationButton = findViewById<View>(R.id.notificationl)
         notificationButton.setOnClickListener {
-            // Start NotificationActivity here
             val intent = Intent(this, TakepicActivity::class.java)
             startActivity(intent)
         }
         val peopleButton = findViewById<View>(R.id.people)
         peopleButton.setOnClickListener {
-            // Start NotificationActivity here
             val intent = Intent(this, MyUserActivity::class.java)
             startActivity(intent)
         }
         val navigationButton = findViewById<View>(R.id.ic_mensaje)
         navigationButton.setOnClickListener {
-            // Start FeedActivity here
             val intent = Intent(this, MensajeActivity::class.java)
             startActivity(intent)
         }
@@ -200,7 +196,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
             }
         })
     }
-
     private val temperatureListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
             if (event.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
@@ -232,16 +227,13 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                         mMyLocationOverlay.setPersonIcon(BitmapDrawable(resources, resizedBitmap).bitmap)
                         mMap.invalidate()
                     }
-
                     override fun onLoadCleared(placeholder: Drawable?) {
-                        // Handle cleanup if needed
                     }
                 })
         }
 
         mMap.overlays.add(mMyLocationOverlay)
     }
-
     private fun createHumiditySensorListener(): SensorEventListener {
         return object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent) {
@@ -252,12 +244,10 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 }
             }
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                
             }
         }
     }
     private fun searchAddressAndDrawRoute(addressOrTitle: String) {
-        
         markersMap[addressOrTitle]?.let { marker ->
             mMap.controller.setCenter(marker.position)
             mMap.controller.setZoom(18.5)
@@ -295,9 +285,7 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                     
                     val lux = event.values[0]
                     if (lux < 5000) {
-                        // Assume dark style
                         runOnUiThread {
-                            
                             mMap.overlayManager.tilesOverlay.setColorFilter(
                                 ColorMatrixColorFilter(floatArrayOf(
                                     -1.0f, 0.0f, 0.0f, 0.0f, 255.0f,
@@ -308,7 +296,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                             )
                         }
                     } else {
-                        // Assume light style
                         runOnUiThread {
                             mMap.overlayManager.tilesOverlay.setColorFilter(null)
                         }
@@ -316,7 +303,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 }
             }
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-                
             }
         }
     }
@@ -367,14 +353,11 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         }
     }
     private fun searchAddressOrMarker(addressOrTitle: String) {
-        // Check if it's a known marker title and center the map on it
         markersMap[addressOrTitle]?.let {
             mMap.controller.setCenter(it.position)
             mMap.controller.setZoom(18.5)
             return
         }
-
-        // If no marker found, proceed to geocode the address
         val geocoder = Geocoder(this)
         try {
             val addresses = geocoder.getFromLocationName(addressOrTitle, 1)
@@ -427,16 +410,13 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
         mMap.invalidate()
     }
     private fun initializeMap() {
-        // Configure the map controller and overlays
         controller = mMap.controller
         controller.setZoom(17.5)
-        // Setup the location overlay
         val locationProvider = GpsMyLocationProvider(this)
         mMyLocationOverlay = MyLocationNewOverlay(locationProvider, mMap)
         mMyLocationOverlay.enableMyLocation() // Enable location updates
         mMyLocationOverlay.enableFollowLocation() // Map follows the location
         mMyLocationOverlay.isDrawAccuracyEnabled = true
-        // Handle initial location fix to center the map on the current location
         mMyLocationOverlay.runOnFirstFix {
             runOnUiThread {
                 if (mMyLocationOverlay.myLocation != null) {
@@ -444,7 +424,6 @@ class MapActivity : AppCompatActivity(), MapListener, GpsStatus.Listener {
                 }
             }
         }
-        // Add the overlay to the map
         mMap.overlays.add(mMyLocationOverlay)
         mMap.invalidate() // Refresh the map
     }
