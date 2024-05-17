@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fotoconnect.databinding.ActivityFeedBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -27,17 +30,23 @@ private const val TAG = "FeedActivity"
 private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
 
 class FeedActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityFeedBinding
     private lateinit var databaseReference: DatabaseReference
     private lateinit var postAdapter: PostAdapter
     private lateinit var postList: MutableList<Post>
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
+
+    companion object {
+        private const val TAG = "FeedActivity"
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeedBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         postList = mutableListOf()
         postAdapter = PostAdapter(this, postList)
         val recyclerView: RecyclerView = binding.userRecyclerView
@@ -46,10 +55,7 @@ class FeedActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Initialize Firebase Realtime Database
         databaseReference = FirebaseDatabase.getInstance().getReference("posts")
-
-        // Attach a listener to read the data at our posts reference
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.exists()) {
@@ -64,7 +70,6 @@ class FeedActivity : AppCompatActivity() {
                         Log.d(TAG, "Post: $it")
                     }
                 }
-                // Reverse the post list to display the most recent posts first
                 postList.reverse()
                 postAdapter.notifyDataSetChanged()
             }
@@ -76,15 +81,14 @@ class FeedActivity : AppCompatActivity() {
 
         val mapButton = findViewById<View>(R.id.ic_mapa)
         mapButton.setOnClickListener {
-            // Check for location permission
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                // Get the location and update Firebase
-                getLastKnownLocationAndUpdateUser {
-                    startActivity(Intent(this, MapActivity::class.java))
-                }
+                getLastKnownLocationAndUpdateUser()
+                startActivity(Intent(this, MapActivity::class.java))
+
             } else {
-                // Request location permission
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                startActivity(Intent(this, MapActivity::class.java))
+
             }
         }
 
@@ -105,9 +109,22 @@ class FeedActivity : AppCompatActivity() {
             val intent = Intent(this, MyUserActivity::class.java)
             startActivity(intent)
         }
+
+        setupLocationUpdates()
     }
 
-    private fun getLastKnownLocationAndUpdateUser(onSuccess: () -> Unit) {
+    private fun setupLocationUpdates() {
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                for (location in locationResult.locations) {
+                    updateUserLocation(location)
+                }
+            }
+        }
+        startLocationUpdates()
+    }
+
+    private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -116,13 +133,30 @@ class FeedActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000 // 10 seconds
+            fastestInterval = 5000 // 5 seconds
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+    }
+
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    private fun getLastKnownLocationAndUpdateUser() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
         fusedLocationClient.lastLocation
@@ -130,10 +164,9 @@ class FeedActivity : AppCompatActivity() {
                 location?.let {
                     updateUserLocation(it)
                 }
-                onSuccess()
             }
             .addOnFailureListener {
-                onSuccess()
+                // Handle failure
             }
     }
 
@@ -158,20 +191,23 @@ class FeedActivity : AppCompatActivity() {
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted, get the location and update Firebase
-                    getLastKnownLocationAndUpdateUser {
-                        startActivity(Intent(this, MapActivity::class.java))
-                    }
+                    getLastKnownLocationAndUpdateUser()
+                    startLocationUpdates()
                 } else {
                     Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MapActivity::class.java))
                 }
-                return
             }
         }
     }
 
-    companion object {
-        private const val TAG = "FeedActivity"
+    override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
     }
 }
+

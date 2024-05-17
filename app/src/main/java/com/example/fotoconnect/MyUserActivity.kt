@@ -28,6 +28,11 @@ class MyUserActivity : AppCompatActivity() {
     private lateinit var storageReference: FirebaseStorage
     private var imageUri: Uri? = null
 
+    companion object {
+        private const val PICK_IMAGE_REQUEST = 1
+        private const val TAG = "MyUserActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_myprofile)
@@ -50,6 +55,15 @@ class MyUserActivity : AppCompatActivity() {
         }
 
         loadUserInfo()
+
+        val moreSignVectorButton = findViewById<ImageView>(R.id.UserSettings)
+        moreSignVectorButton.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, IniciaSesion::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun loadUserInfo() {

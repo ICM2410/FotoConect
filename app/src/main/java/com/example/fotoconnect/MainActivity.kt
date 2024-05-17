@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
             }
             // Proceed to IniciaSesion activity regardless of the permission result
-            proceedToIniciaSesion()
+            proceedToIniciaSesion()}}
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Chat Notifications"
